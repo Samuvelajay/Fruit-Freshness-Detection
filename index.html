@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Freshness Prediction</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            text-align: center;
+            background: url('/static/270.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 45%; /* Increased container width */
+            background: rgba(180, 187, 105, 0.58);
+            padding: 10px 40px;
+
+ /* Adjusted padding for better spacing */
+            border-radius: 12px;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: white; /* Changed title color to white */
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-family: 'Algerian', sans-serif; /* Used Algerian font */
+        }
+
+        .form-control {
+            background-color:rgb(106, 167, 200); /* Light brown color for the browse box */
+            border: 1px solidrgb(19, 19, 18); /* Slightly darker brown border */
+            color: #000;
+            font-weight: bold;
+        }
+
+        .form-control:focus {
+            background-color:rgb(147, 187, 207); /* Slightly lighter brown on focus */
+            border-color:rgb(83, 86, 87);
+            box-shadow: none;
+        }
+
+        .btn-upload {
+            background:rgb(112, 129, 175); /* Deep blue color */
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .btn-upload:hover {
+            background: #102A5E;
+        }
+
+        .btn-predict {
+            background:rgba(128, 102, 222, 0.65);
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .btn-predict:hover {
+            background: #218838;
+        }
+
+        .prediction-text {
+            font-size: 22px;
+            font-weight: bold;
+            font-family: 'Algerian', sans-serif; /* Used Algerian font */
+            color: rgb(11, 16, 55); /* Orange */
+            text-shadow: 2px 2px 5px #8B0000; /* Red shadow */
+        }
+
+        .image-container img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Fruit Freshness Prediction</h1>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput" class="form-control mt-3" required onchange="previewImage(event)">
+            <button type="submit" class="btn btn-predict">Predict</button>
+        </form>
+
+        <div class="image-container">
+            <img id="preview" src="#" alt="Uploaded Image" style="display:none;">
+        </div>
+
+        {% if file_path %}
+            <h2 class="mt-3">Uploaded Image:</h2>
+            <div class="image-container">
+                <img src="{{ file_path }}" alt="Uploaded Image">
+            </div>
+            <h2 class="prediction-text mt-3">Prediction: {{ predicted_class }}</h2>
+        {% endif %}
+    </div>
+
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var imgElement = document.getElementById('preview');
+                imgElement.src = reader.result;
+                imgElement.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
